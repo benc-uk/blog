@@ -1,7 +1,8 @@
-title:            Pulse Code
+title:            "Pulse Code"
 description:      Ben Coleman's Blog
+logo:             logo.png
 disqus_shortname: 
-reading_time:     true
+reading_time:     false
 words_per_minute: 180
 # Your site's domain goes here (eg: https://mmistakes.github.io, http://yourdomain.com, etc)
 # When testing locally leave blank or use http://localhost:4000
@@ -46,12 +47,13 @@ plugins:
   - jekyll-paginate
   - jekyll-gist
   - jekyll-feed
+  - jekyll-postfiles
 sass:
   sass_dir: _sass
   style: compressed
 
 # https://github.com/mojombo/jekyll/wiki/Permalinks
-permalink:   /:categories/:title/
+permalink: /:categories/:title/
 
 # Amount of post to show on home page
 paginate: 5
@@ -66,6 +68,7 @@ kramdown:
 
 include: 
   - .htaccess
+  - pages
 exclude: 
   - "*.less"
   - "*.sublime-project"
