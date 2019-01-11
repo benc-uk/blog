@@ -36,20 +36,20 @@ The second rule had no IP filter so would block all access to the **wp-login.php
   <system.webServer>
     <rewrite>
       <rules>
-            <!-- allow access to wp-login.php from my IP range and stop processing more rules -->
-            <rule name="allow-me-wp-login" patternSyntax="Wildcard" stopProcessing="true">
-                <match url="wp-login.php" />
-                <conditions logicalGrouping="MatchAny">
-                    <add input="{REMOTE_ADDR}" pattern="123.234.*.*" /> <!-- My ISP IP range -->    
-                </conditions>
-                <action type="None" />
-            </rule>
+        <!-- allow access to wp-login.php from my IP range and stop processing more rules -->
+        <rule name="allow-me-wp-login" patternSyntax="Wildcard" stopProcessing="true">
+          <match url="wp-login.php" />
+          <conditions logicalGrouping="MatchAny">
+            <add input="{REMOTE_ADDR}" pattern="123.234.*.*" /> <!-- My ISP IP range -->    
+          </conditions>
+          <action type="None" />
+        </rule>
 
-            <!-- block all access to wp-login.php -->
-            <rule name="block-all-wp-login" patternSyntax="Wildcard">
-                <match url="wp-login.php" />
-                <action type="CustomResponse" statusCode="403" statusReason="Get lost loser!"  />
-            </rule>           
+        <!-- block all access to wp-login.php -->
+        <rule name="block-all-wp-login" patternSyntax="Wildcard">
+          <match url="wp-login.php" />
+          <action type="CustomResponse" statusCode="403" statusReason="Get lost loser!"  />
+        </rule>           
       </rules>
     </rewrite>
   </system.webServer>

@@ -7,9 +7,11 @@ tags:
 - devops
 - infrastrcuture-as-code
 - automation
-categories: Tech-Primer
 ---
-I've decided to put a few of my technical guides online, I've called these guides "technical primers", created with technical folks in mind, that might be new to a particular topic or domain. I wanted to solve several things with these primers, combining both introductory overview content, but also technical reference material and deeper dives into various key areas.  
-These can be used for presentations, used in labs & exercises but also given as handout/reading material.  
+First in a series of "tech primers" on a range of topics. Created for a technical audience, that might be new to a particular topic or domain. I wanted to solve several things with these primers, combining both introductory overview content, but also technical reference material and deeper dives into various key areas.
 
-#### The first of these guides is on [Azure Resource Manager - View & Download](https://1drv.ms/b/s!AhEX99ErZbKGg1DtCFnLLTCjuazu)
+If you’re new to Azure and especially the Azure Resource Manager, this guide is a handy place to get started
+
+This content can be used for presentations, used in labs & exercises but also given as handout/reading material.
+
+[View & Download <i class="fas fa-external-link"></i>](https://1drv.ms/b/s!AhEX99ErZbKGg1DtCFnLLTCjuazu){: .btn .btn-success}

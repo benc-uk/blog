@@ -1,5 +1,7 @@
 # Menu navigation links
 
+- title: Search
+  url: /search
 
 - title: Projects
   url: http://benco.io
