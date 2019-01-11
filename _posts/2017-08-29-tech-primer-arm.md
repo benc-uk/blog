@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Azure Resource Manager - Tech Primer
 date: 2017-08-29 12:52:00
 tags:

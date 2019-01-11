@@ -1,13 +1,12 @@
 ---
-layout: post
 title: Securing Wordpress in Azure App Service
+date: 2017-03-16
 tags:
   - app-service
   - azure
   - iis
   - php
   - wordpress
-date: 2017-03-16 12:47:59
 ---
 
 Since I moving my blog into Azure (as detailed in a [previous post](/migrating-running-wordpress-in-azure/)), I had started to see a series of odd alerts being fired out, with lots of random 500 errors at odd times of the day & night. When I checked the website was fine. At first thought this was related to the Azure App Service I was hosting my site in, but it occurred to me that it could have been happening before, but I just didn't know - Azure & the App Service was alerting me to stuff I previously had no visibility into
