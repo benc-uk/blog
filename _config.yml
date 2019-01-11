@@ -47,7 +47,6 @@ plugins:
   - jekyll-paginate
   - jekyll-gist
   - jekyll-feed
-  - jekyll-postfiles
 sass:
   sass_dir: _sass
   style: compressed

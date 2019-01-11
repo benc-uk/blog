@@ -14,14 +14,16 @@ Since I moving my blog into Azure (as detailed in a [previous post](/migrating-r
 
 <!--more-->
 
-The alert I had configured looked like this, and it was firing 3 or 4 times a week with a big spike of HTTP errors, 60+ at a time
-![](alert.png)
+The alert I had configured looked like this, and it was firing 3 or 4 times a week with a big spike of HTTP errors, 60+ at a time  
+{% include img src="alert.png" %}
 
-Determined to find out what was going on, I enabled all the logging I could. Azure App Services makes this easy and something you can configure from the portal, you can then grab the logs over FTP
-![](logging.png)
+Determined to find out what was going on, I enabled all the logging I could. Azure App Services makes this easy and something you can configure from the portal, you can then grab the logs over FTP  
+{% include img src="logging.png" %}
+
 
 Most of the logs didn't reveal much, other than "you had a 500 server error" at this specific date & time, gee thanks I already knew that! The webserver logs however were helpful, as I could see a big series of HTTP POSTs to the **wp-login.php** page from strange IP addresses in dodgy parts of the world, each one resulting in a 500 response. This seemed to be some sort of hack attempt, someone going through a set of known exploits or some other way to try to break into Wordpress.
 
+## Solution 
 So I decided to lock down access, but how? Azure Web Apps are fantastic but they don't currently provide any control over the built in firewall. Besides I wanted to restrict access to a single URL rather than the whole site.
 
 The solution was to use **web.config** as under the covers Azure Web Apps use IIS as the hosting web/app server for PHP. It's been many years since I lifted the lid on IIS and got hands on with configuring it. I did some reading & research to figure out if it was possible to do what I wanted, and if so, how? The answer - rewrite rules, for which I used this [comprehensive reference](https://www.iis.net/learn/extensions/url-rewrite-module/url-rewrite-module-configuration-reference).
@@ -56,4 +58,4 @@ The second rule had no IP filter so would block all access to the **wp-login.php
 
 One last shout out to a nice Azure Web App feature that made configuring this a lot easier, and that's the "App Service Editor" which is an in-browser editor/IDE for your site, allowing you to edit files directly on the webserver. Great for hacking about with config files
 
-![](app-svc-edit.png)
+{% include img src="app-svc-edit.png" %}

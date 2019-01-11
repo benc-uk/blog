@@ -1,0 +1,1 @@
+{% capture imagePath %}{{ page.date | date: "%Y-%m-%d" }}-{{ page.url | replace:'.html','.md' | slugify }}/{{ include.src }}{% endcapture %}<img src="/images/posts/{{ imagePath }}" {% if include.alt %} alt="{{ include.alt }}" {% endif %} {% if include.width %} width="{{ include.width }}" {% endif %}/>
