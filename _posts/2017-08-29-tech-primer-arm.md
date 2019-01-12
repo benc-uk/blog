@@ -1,11 +1,6 @@
 ---
 title: Azure Resource Manager - Tech Primer
-date: 2017-08-29 12:52:00
-tags:
-- azure
-- devops
-- infrastrcuture-as-code
-- automation
+tags: [azure, devops, infrastructure-as-code, automation, guide]
 ---
 First in a series of "tech primers" on a range of topics. Created for a technical audience, that might be new to a particular topic or domain. I wanted to solve several things with these primers, combining both introductory overview content, but also technical reference material and deeper dives into various key areas.
 
