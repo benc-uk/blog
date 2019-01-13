@@ -8,19 +8,16 @@
 .entry-image-index {
   overflow: hidden;
   max-height: $feature-image-height / 2;
+  height: $feature-image-height / 2;
   object-fit: fill;
-  position: relative; 
   text-align: center;
 }
 .entry-image-index h1 {
-  position: absolute; 
-  top: 0%; 
-  width: 100%;
   color: white;
-  // transform: translate(0, -10vw);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-  word-wrap: break-word;
-  white-space: normal;
+}
+.header-title h1 {
+  font-size: calc(20px + 3vw);
 }
 
 // SVG background

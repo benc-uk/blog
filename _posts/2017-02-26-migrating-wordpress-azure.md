@@ -5,7 +5,7 @@ tags: [app-insights, azure, mysql, app-service, wordpress]
 
 Recently I decided to move my Wordpress blog from where it is hosted in a virtual shared Linux environment (TSO Host) into Azure. The current hosting is fine and has served me well over the years, but seeing as my current job is working with Azure I wanted to experiment. In particular my role is focused on the PaaS web &amp; app hosting services in Azure, so I wanted to see first hand what the experience was like, particularly for a non enterprise user.
 
-> Note. Since this post was written I've migrated my blog twice more! Once into a static site using [Hexo](https://hexo.io/) and again using Jekyll. The blog currently is hosted in GitHub pages, and Azure and Wordpress etc is no longer a concern
+> Note. Since this post was written I've migrated my blog (twice in fact!). Once into a static site using [Hexo](https://hexo.io/) and again using Jekyll. The blog currently is hosted in GitHub pages, and Azure and Wordpress etc is no longer a concern
 
 The migration has been successful (hopefully this page loaded without errors!), so I've decided to capture my thoughts on the process and some of the challenges I encountered along the way
 

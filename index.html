@@ -18,8 +18,10 @@ image:
 <article class="hentry">
   <header>
     {% if post.image.feature %}
-      <div class="entry-image-index">
-        <a href="{{ post_url }}" title="{{ post.title }}"><img src="{{ site.url }}/images/{{ post.image.feature }}" alt="{{ post.title }}"><h1>{{ post_title }}</h1></a>
+      <div class="entry-image-index" style="background-image: url({{ site.url }}/images/{{ post.image.feature }});">
+        <a href="{{ post_url }}" title="{{ post.title }}">
+          <h1>{{ post_title }}</h1>
+        </a>
       </div><!-- /.entry-image -->
     {% endif %}
 
