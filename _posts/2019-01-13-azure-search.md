@@ -8,6 +8,8 @@ I currently help maintain a site called [Azure Citadel](https://azurecitadel.com
 
 Azure Citadel is in part is a big reason why this blog has been dead for 12 months, as the majority of my technical writing ended up there rather than as blog posts. Sorry!
 
+<!--more-->
+
 {% include img src="citadel.png" link="https://azurecitadel.com" %}
 
 We recently did a complete overhaul of the Azure Citadel site and part of this was to improve the search solution we had. In the past we simple linked to the Google Site search (e.g. search for `site: azurecitadel.com foo`) which was a really poor way of doing and totally reliant on Google indexing the site
