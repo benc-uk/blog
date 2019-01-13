@@ -2,8 +2,6 @@
 title: Docker Machine and Azure
 tags: [azure, docker, docker-machine]
 image:
-  color: "#000"
-  opacity: 0.5
   feature: header/h15.svg
 ---
 
