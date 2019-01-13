@@ -10,14 +10,17 @@
   max-height: $feature-image-height / 2;
   object-fit: fill;
   position: relative; 
-  text-align: center
+  text-align: center;
 }
 .entry-image-index h1 {
   position: absolute; 
-  top: 5%; 
+  top: 0%; 
   width: 100%;
   color: white;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  // transform: translate(0, -10vw);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  word-wrap: break-word;
+  white-space: normal;
 }
 
 // SVG background
@@ -28,7 +31,7 @@ body {
 
 .entry-header {
   background-color: black;
-  box-shadow: 0px 0px 18px 6px rgba(0,0,0,0.55);
+  box-shadow: 0px 0px 18px 6px rgba(0, 0, 0, 0.55);
 }
 
 .entry-image {
@@ -41,7 +44,7 @@ body {
 
 // Better shadows on header/titles
 .feature .header-title h1, .header-title {
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.6) !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6) !important;
 }
 
 .footer-wrapper a,
@@ -86,7 +89,7 @@ figcaption {
 }
 
 // Util class
-.centerbox {
+.centered {
   text-align: center;
 }
 .btn-lg {

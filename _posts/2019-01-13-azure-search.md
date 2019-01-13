@@ -20,4 +20,4 @@ But it quietly bugged me for a while, and I wanted to learn more about Azure Sea
 
 I've written up all the details of the integration over on Azure Citadel (yes that's a bit meta/Inception but hey!), hopefully in such a way the solution can be reused by others
 
-[Read Full Article &nbsp; <i class="far fa-book"></i>](https://azurecitadel.com/data-ai/azure-search-integration/){: .btn .btn-success .btn-lg .centerbox}
+[Read Full Article &nbsp; <i class="far fa-book"></i>](https://azurecitadel.com/data-ai/azure-search-integration/){: .btn .btn-success .btn-lg .centered}
