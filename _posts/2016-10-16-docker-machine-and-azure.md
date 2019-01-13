@@ -4,7 +4,7 @@ tags: [azure, docker, docker-machine]
 image:
   color: "#000"
   opacity: 0.5
-  feature: header/abstract-12.jpg
+  feature: header/h15.svg
 ---
 
 Part 2 of a basic series covering ASP.NET, Docker and Azure. This part is independent of what we did with ASP.NET in [part 1](/dotcore-web-app-101), and serves as a guide on getting Docker running in Azure. I'm not going to cover the basics of Docker or an introduction into why containerization is a Good Thing™ there's a million other posts & articles out there on those topics

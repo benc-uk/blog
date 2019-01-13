@@ -2,7 +2,7 @@
 layout: page
 title: About
 image:
-  feature: header/abstract-6.jpg
+  feature: header/h16.svg
 comments: false
 share: false
 permalink: /about/

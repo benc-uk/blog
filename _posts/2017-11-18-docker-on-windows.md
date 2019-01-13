@@ -2,7 +2,7 @@
 title: Running Docker on Windows 10
 tags: [windows-10, docker]
 image:
-  feature: header/h18.svg
+  feature: header/h11.svg
 ---
 Running Docker, or specifically running Docker on your Windows 10 machine, sounds simple? Well yes in the most part it is, Docker provide [an installer and setup](https://store.docker.com/editions/community/docker-ce-desktop-windows) to do just that.  
 

@@ -3,7 +3,7 @@ layout: post-index
 title: Ben Coleman
 comments: false
 image:
-  feature: header/h04.svg
+  feature: header/h17.svg
 ---
 {% for post in paginator.posts %}
 
@@ -20,8 +20,6 @@ image:
     {% if post.image.feature %}
       <div class="entry-image-index">
         <a href="{{ post_url }}" title="{{ post.title }}"><img src="{{ site.url }}/images/{{ post.image.feature }}" alt="{{ post.title }}"><h1>{{ post_title }}</h1></a>
-          
-
       </div><!-- /.entry-image -->
     {% endif %}
 
@@ -34,14 +32,10 @@ image:
       </span><!-- /.entry-reading-time -->
       {% endif %}
     </div><!-- /.entry-meta -->
-    <!-- {% if post.link %}
-      <h1 class="entry-title"><a href="{{ site.url }}{{ post.url }}" class="permalink" rel="bookmark" title="{{ post.title }}"><i class="fa fa-bookmark"></i></a> <a href="{{ post.link }}">{{ post.title }}</a></h1>
-    {% else %}
-      <h1 class="entry-title"><a href="{{ site.url }}{{ post.url }}" rel="bookmark" title="{{ post.title }}" itemprop="url">{{ post.title }}</a></h1>
-    {% endif %} -->
   </header>
 
   <div class="entry-content">
+    {% if post.link %}<br/>{% endif %}
     {{ post.excerpt }}
   </div><!-- /.entry-content -->
 
