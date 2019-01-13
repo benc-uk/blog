@@ -84,13 +84,14 @@ exclude:
   - vendor
   - _site
   - _ignore
+  - "**/node_modules"
 
 defaults:
   - scope:
       path: ""
     values:
       image:
-        feature: header/abstract-2.jpg
+        feature: header/h07.svg
   - scope:
       path: "" 
       type: posts

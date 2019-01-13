@@ -1,0 +1,9 @@
+<!-- BC. Dynamic background colour and image opacity for header -->
+{% if page.image.opacity %}
+<style type="text/css">.entry-image { opacity: {{ page.image.opacity }}; }</style>
+{% endif %}
+{% if page.image.color %}
+<style type="text/css">.entry-header { background-color: {{ page.image.color }}; }</style>
+{% endif %}
+
+

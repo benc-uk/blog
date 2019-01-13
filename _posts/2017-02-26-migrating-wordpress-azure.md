@@ -1,6 +1,9 @@
 ---
 title: Migrating & Running Wordpress in Azure
 tags: [app-insights, azure, mysql, app-service, wordpress]
+header:
+  color-1: "#ff5599"
+  color-2: "#000"
 ---
 
 Recently I decided to move my Wordpress blog from where it is hosted in a virtual shared Linux environment (TSO Host) into Azure. The current hosting is fine and has served me well over the years, but seeing as my current job is working with Azure I wanted to experiment. In particular my role is focused on the PaaS web &amp; app hosting services in Azure, so I wanted to see first hand what the experience was like, particularly for a non enterprise user.

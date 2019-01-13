@@ -4,11 +4,20 @@
 
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
 
-// Resizing MASSIVE images on entries
+// Totally changing how entry header images on index page are shown
 .entry-image-index {
   overflow: hidden;
   max-height: $feature-image-height / 2;
   object-fit: fill;
+  position: relative; 
+  text-align: center
+}
+.entry-image-index h1 {
+  position: absolute; 
+  top: 5%; 
+  width: 100%;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
 }
 
 // SVG background
@@ -23,11 +32,16 @@ body {
 }
 
 .entry-image {
-  z-index: 30;
+  z-index: 3;
 }
 
 .header-title {
-  z-index: 50;
+  z-index: 5;
+}
+
+// Better shadows on header/titles
+.feature .header-title h1, .header-title {
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6) !important;
 }
 
 .footer-wrapper a,

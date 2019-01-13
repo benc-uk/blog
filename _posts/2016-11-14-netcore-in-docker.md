@@ -1,12 +1,6 @@
 ---
 title: Running your ASP.NET Core app in Docker
-tags:
-  - azure
-  - docker
-  - dotnet-core
-categories: Docker
-date: 2016-11-14 14:07:48
-icon: fas fa-file-code
+tags: [azure, docker, dotnet-core]
 ---
 
 Final part of a [series](/guide-dotnetcore-docker-azure/) covering some of the fundamentals of ASP.NET Core, Docker and Azure. This part is fairly dependent on what we covered in [part 1](/dotcore-web-app-101/) and [part 2](/docker-machine-and-azure/). However if you want to skip ahead you can use my pre-created ASP.NET Core demo app on Github; [https://github.com/benc-uk/dotnet-demoapp](https://github.com/benc-uk/dotnet-demoapp) which you can clone and use to skip what was covered in part 1.
@@ -19,15 +13,18 @@ However we're going to need a running machine with Docker engine on so skipping 
 As you'd expect .NET Core provides a means to publish your application so it can be run without your source code. For console apps this will be some form of executable like a .exe, and for ASP.NET web applications this will be a .dll and bundle of required libraries & static content (e.g. css, images, js etc). Hang on? Did I just say .dll? I thought we were going to run this on Docker on a Linux host? DLLs are a Windows thing, right? Yeah but don't worry, .NET Core uses the dll files regardless of the target OS, even on Linux, it seems like a dumb choice of file extension to me but there we go.
 
 To do this we run `dotnet publish` as follows:
+
 ```
 dotnet publish -c Debug -o ./pubout
 ```
 
 This should publish your app into the '_pubout_' sub-directory. Inside the '_pubout_' directory will be a .dll called the same as your current project working directory, if you are following on from part one this is likely to be _"webapp.dll"_ if you cloned my git project, it will be _"demo-webapp.dll"_. If we like we can now copy the contents of the '_pubout_' directory to any machine that has .NET Core installed and run it with
+
 ```
 cd pubout
 dotnet webapp.dll
 ```
+
 Which will start the app running under the built-in .NET Core Kestrel webserver, just like we did with `dotnet run` in part 1. That's all well and good, but we want to do something different...
 
 ### Intro to building Docker images
@@ -35,6 +32,7 @@ Which will start the app running under the built-in .NET Core Kestrel webserver,
 OK what about Docker and containers? We want to get our app into what Docker calls an image, from the image you can start a running container like we did in part 2\. When we did `docker run nginx`, Docker knew to pull down the standard nginx image from the online repository (called Dockerhub). However we'll be creating our own image all neatly packaged up with .NET Core and our application. The best part - it'll be totally standalone so anyone can run it without faffing about installing .NET Core.
 
 This is all done with Dockerfiles and the `docker build` command. For me Dockerfiles are where I really had that first "ah-ha" moment with Docker and started to see what all the fuss was about, let's take a look at a Dockerfile:
+
 ```dockerfile
 # Super simple (and pointless) example of a Dockerfile
 FROM ubuntu:latest
@@ -47,6 +45,7 @@ ADD hello.sh script/hello.sh
 
 ENTRYPOINT bash /stuff/script/hello.sh
 ```
+
 This is a totally pointless example that simply runs a shell script, but it introduces many of the core elements of a Dockerfile. Key things we can do:
 
 -  **FROM** - Use a base image as our starting point, all our changes are applied on top of that base. In this case we use the basic ubuntu image with the tag "latest" which will be pulled down from Dockerhub for us.
@@ -70,15 +69,18 @@ There's also tags we can supply to specify the version we we'll stick to using u
 If you're really interested in what these images contain you can poke about with the source Dockerfiles over on Github [dotnet/dotnet-docker](https://github.com/dotnet/dotnet-docker) and [aspnet/aspnet-docker ](https://github.com/aspnet/aspnet-docker)
 
 We have two approaches from here, one where we carry out the `dotnet publish` separate from the Docker image build, then copy the published contents into the Docker image (using COPY in our Dockerfile), an example Dockerfile doing this would be
+
 ```dockerfile
 FROM microsoft/dotnet:latest
 COPY pubout/ /approot/
 EXPOSE 5000/tcp
 ENTRYPOINT dotnet /approot/webapp.dll
 ```
+
 Note. This Dockerfile introduces a new term, EXPOSE, which doesn't do anything really, but serves as a hint as to what ports your app will be listening on.
 
 Another slightly better approach I think is to run the .NET publish and build as part of the build of the docker image. This approach is cleaner from a CI/CD workflow perspective and the one we'll take from here. Note, we are using the **microsoft/aspnetcore-build** base image, this image includes all the dependent build tools you might need Which is another nice thing about Docker, you don't need to clutter up your build servers with lots of tools and maintain them. The Dockerfile to do the full build &amp; publish, looks like:
+
 ```dockerfile
 FROM microsoft/aspnetcore-build:latest
 WORKDIR /myapp
@@ -103,16 +105,19 @@ Create a file called **Dockerfile** (with no extension and uppercase D, it can n
 Before we run the build we need to be connected to our remote Docker host, if you haven't already follow the steps from [part 2](/docker-machine-and-azure/) where we use docker-machine to point our local system at a remote running Docker host. A good test is doing a quick `docker ps` if you don't get an error, you're good to go
 
 To carry out the build we'd go to where our **Dockerfile** resides, i.e. the root of our project and run the `docker build` command. I was actually quite surprised to see this command work with a remote machine, after all - the code and other files we are injecting into the image reside _locally_, but there's some magic where all the gubbins we need is uploaded to the remote machine and the build done there. Very clever. So the command is:
-```
+
+```bash
 docker build . -t myappimage
 ```
-Note we don't specify the name or path of the `Dockerfile`, just the directory where it resides (in this case '.'). The **-t** part effectively names our image, the full naming convention is _`{repository}/{name}:{tag}`_, but you don't really need to worry about all that until you want to push your image to a registry like Dockerhub.
+
+Note we don't specify the name or path of the `Dockerfile`, just the directory where it resides (in this case dot `.` aka the current directory). The `-t` part effectively names our image, the full naming convention is `{repository}/{name}:{tag}`, but you don't really need to worry about all that until you want to push your image to a registry like Dockerhub.
 
 That might take a while the first time, but don't worry Docker is pretty smart and caches filesystem layers in images. This means subsequent builds will be much quicker and only bring in deltas, which is another reason Docker is so popular for CI/CD. You might also see some red warnings, don't worry
 
 A quick `docker images` command will verify things, and should look much like this:
+
 ```
-docker images
+$ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 myappimage          latest              2afe4259f39a        2 minutes ago       166.4 MB
 microsoft/dotnet    latest              f753707788c5        3 days ago          537.5 MB
@@ -128,7 +133,7 @@ You'll get back a long string which is the container id, don't worry about that 
 
 Open your browser to **http://{docker-host-publicip}:5000** and all going well you should see your app.
 
-{% asset_img screen.png Golly gosh! %}
+{% include img src="screen.png" alt="Golly gosh!" %}
 
 Not super exciting is it? Well I agree it's not terribly visually pleasing, but we should take a moment recap what we've achieved:
 

@@ -1,13 +1,8 @@
 ---
 title: Node.js with App Service on Linux
-date: 2017-09-15 22:23:00
-tags:
-- azure
-- nodejs
-- docker
-- linux
-categories: Azure
-icon: fab fa-node-js
+tags: [azure, nodejs, docker, linux]
+image:
+  feature: header/h02.svg
 ---
 This is a follow up to my [first post](/nodejs-in-azure-pt1) on running Node.js in Azure App Service, this time I want to cover [the newly GA'ed App Service on Linux](https://azure.microsoft.com/en-us/blog/general-availability-of-app-service-on-linux-and-web-app-for-containers/). 
 In most regards *App Service on Linux* works the same way as the regular (Windows) *App Service*, is has the same core features and operate mostly the same.  
@@ -33,14 +28,15 @@ Kudu deployment options are limited to local Git, Github & Bitbucket (so no OneD
 
 Another [neat feature is SSH access](https://docs.microsoft.com/en-us/azure/app-service/containers/app-service-linux-ssh-support), which gives you a interactive web shell into the running container, this lets you poke about to fix (and break!) things 
 
-{% asset_img linux-web-app.png Illustration of how Linux Web Apps works with Node %}
+{% include img src="linux-web-app.png" alt="Illustration of how Linux Web Apps works with Node" caption=true %}
 
 ### Starting your Node app in App Service on Linux
 The provided containers for Node do some clever stuff, in order to figure out how to start your app. The first choice will using the `npm start` script inside your `package.json` assuming it is provided. The next fallback is a "guess", so if your startup file is named: `bin/www`, `server.js`, `app.js`, `index.js` or `hostingstart.js` you don't need to do anything, the container will find it, and start Node running it.
 The source & Dockerfiles are all on Github https://github.com/Azure-App-Service/node so you can poke about and take a look what is going on
 
 Should this auto detection fail or you simply want to just tell the Web App how to start your Node app you can do so, via the portal
-<img src="/nodejs-in-azure-pt2/builtin-startup.png" width="640">
+
+{% include img src="builtin-startup.png" %}
 
 This "Startup File" can be the JavaScript file which starts your app (e.g. something like `server.js` or `index.js`) or more interestingly it can be a PM2 JSON file (typically called `process.json`), which can describe how to run your app and several other things such as watching for file changes and restart the Node process. More info on the startup file & PM2 is [documented here](https://docs.microsoft.com/en-gb/azure/app-service-web/app-service-linux-using-nodejs-pm2)
 
@@ -61,7 +57,7 @@ Cool eh? There is one caveat - the traffic to and from your container must be HT
 ### Web App for Containers with Node
 OK back to Node. Running a your app in custom Node.js container is simple, use one of the [standard official Node runtime images](https://hub.docker.com/_/node/) as a base and create a Dockerfile which bundles your app code on top, have `npm install` in there, and set the command/entrypoint to `npm start`
 
-{% asset_img web-app-containers.png Illustration of how Web Apps for Containers works with Node %}
+{% include img src="web-app-containers.png" alt="Illustration of how Web Apps for Containers works with Node" caption=true %}
 
 A simple, minimal working Dockerfile for a Node Express app would look as follows
 
@@ -80,7 +76,7 @@ CMD [ "npm", "start" ]
 Pretty simple!  
 You can then push your image to either Dockerhub, Azure Container Registry or your own private registry then you simply point your Web App at it. You set this either during creation or you can specify it later from the portal & the "Docker Container" blade
 
-{% asset_img wafc-image.png Selecting a custom image in Web App for Containers %}
+{% include img src="wafc-image.png" alt="Selecting a custom image in Web App for Containers" caption=true %}
 
 **Note.** The App Service will do a pretty good job of inspecting your image and auto detecting which port to use, the public web address provided will always be running on 80/443, the port mapping to the container is handled internally. Should you need specify the port you can do so with the `WEBSITES_PORT` application setting.
 

@@ -1,13 +1,6 @@
 ---
 title: Running Node.js in Azure App Service
-date: 2017-08-01 16:56:47
-tags:
-- azure
-- nodejs
-- git
-- vsts
-categories: Azure
-icon: fab fa-node-js
+tags: [azure, nodejs, git, vsts]
 ---
 I've been using Node.js quite a lot lately as I find it a nice quick way to get web projects started easily, and one of the things I've been doing is deploying and running my Node.js apps in Azure. Azure provides a number of ways of to run Node.js code within the platform, but I'll be focusing on the PaaS Azure App Services or Web Apps ([more info](https://docs.microsoft.com/en-us/azure/app-service-web/)), rather than VMs or anything strange.
 
@@ -39,7 +32,8 @@ This is by far the simplest way to deploy your Node app to an Azure App Service,
 
 When you do a git push it will trigger deployment automation task within Kudu, if you watch the output of the git push command you will see various things happening (the hidden magic I referred to earlier). Kudu is doing some clever stuff here, It will look inside your `package.json` file and work out which is the main .js file for your app, as specified in the `scripts` section as the `start` script. It will use this and generate a valid web.config for you. 
 Next it will run `npm install --production` to restore all the packages your app needs.
-{% asset_link gitout.png 'Here is a screenshot of the git output with the Kudu parts highlighted' %}
+
+{% include img src="gitout.png" alt="Here is a screenshot of the git output with the Kudu parts highlighted" caption=true %}
 
 This is all kinda great, you're getting continuous deployment (build and release automation) for free, all built into the platform where your code will run. If I was being a DevOps purist there's also a downside - you're going straight from your code into a running deployed site, no chance to run unit tests, manage artifacts etc
 
@@ -48,20 +42,25 @@ One last thing before we move on, it's worth being aware of the [many configurab
 
 ## Deployment via Visual Studio Team Services 
 This is a slightly more managed deployment path where you have more control over what is happening. VSTS is a complex beast with a lot of features, I'll be focusing on the Release aspect, and specifically the *Deploy Azure App Service* task
-{% asset_img vsts-task.png &nbsp; %}
+
+{% include img src="vsts-task.png" %}
+
 First time I tried to use this in VSTS to deploy my Node app to an App Service it was a failure. In trying to figure out why, lead me to discovering things like iisnode, web.config requirement and all the nice auto-magic that Kudu was doing to my previous git deployments.
 
 In a nutshell; by default this task just dumps your files into your App Service, which is why it won't work with Node applications without some settings changes.
 
 Firstly getting the `web.config` generated, this required not only ticking the fairly obvious tickbox but also providing a bunch of arcane undocumented parameters, as follows
-{% asset_img vsts-webconfig.png Hardly obvious! %}
+
+{% include img src="vsts-webconfig.png" alt="Hardly obvious!" caption=true %}
+
 I had to look in the [sourcecode of the VSTS task](https://github.com/Microsoft/vsts-tasks/blob/master/Tasks/Common/webdeployment-common/webconfigutil.ts) to figure them out!  
 Note. The `NodeStartFile` parameter defaults to `server.js` so can be omitted if that's the name of your start file, also note it is not smart like Kudu so won't examine your `package.json` to get the correct filename
 
 That leaves the `npm install` part, with VSTS you have a choice:
 - Pre deploy. Run `npm install` as part of your build process and create a zip/artifact bundle which you then release with the *Deploy Azure App Service* task. This feels the most correct in terms of overall process, but has the downside of needing to transfer a **lot** of files with your release and to/from VSTS's artifact store.
 - Post deploy. Use the "Inline Script" option on the *Deploy Azure App Service* task. Which looks like this
-{% asset_img vsts-npminstall.png This works %}
+
+{% include img src="vsts-npminstall.png" alt="This works" %}
 
 
 ## Deployment via FTP / Dropbox / OneDrive etc
