@@ -9,8 +9,9 @@
   overflow: hidden;
   max-height: $feature-image-height / 2;
   height: $feature-image-height / 2;
-  object-fit: fill;
   text-align: center;
+  background-position: center; 
+  background-size: cover;
 }
 .entry-image-index h1 {
   color: white;

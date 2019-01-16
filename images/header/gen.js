@@ -2,7 +2,6 @@ const fs = require('fs')
 var Trianglify = require('trianglify')
 
 // https://uigradients.com
-
 let colours = [
   {list: ['#FC466B', '#3F5EFB']},
   {list: ['#ad5389', '#3c1053']},
@@ -40,3 +39,16 @@ for(let c of colours) {
   fs.writeFileSync(`h${i.toString().padStart(2, '0')}.svg`, svg.outerHTML)
   i++
 }
+
+// for(i = 0; i<100; i++) {
+//   var pattern = Trianglify({
+//     width: 3440, 
+//     height: 1440,
+//     cell_size: 120,
+//     // x_colors: ['#7A77CE', '#ffffff', '#199974'],
+//     // y_colors: [ '#199974', '#7A77CE' ]
+//   })
+
+//   let svg = pattern.svg({includeNamespace: true})
+//   fs.writeFileSync(`wallpaper-${i}.svg`, svg.outerHTML)
+// }
