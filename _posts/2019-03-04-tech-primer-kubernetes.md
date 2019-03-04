@@ -2,7 +2,7 @@
 title: Kubernetes - Tech Primer
 tags: [kubernetes, containers, guide]
 ---
-I've been working on this one for a long time, but I think it's finally ready for the world
+I've been working on this one for a long time, but I think it's finally ready for the world.  
 Kubernetes is a huge topic and I wanted to condense down my learnings over the past 12 months, into some digestible & re-usable form, so I created another of my tech primers. 
 
 This goes fairly deep and is designed for a technical audience, so is much more than a quick overview of Kubernetes (altogether there is some of that). At the same time Kubernetes can get hellishly complex in many aspects, so there's a lot I don't cover
