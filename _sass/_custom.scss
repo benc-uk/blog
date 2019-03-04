@@ -94,3 +94,8 @@ figcaption {
   font-size: $doc-font-size * 2px;
   font-weight: bold;
 }
+
+blockquote {
+  font-family: $base-font;
+  margin-left: 0.5rem;
+}

@@ -8,4 +8,4 @@ If you’re new to Azure and especially the Azure Resource Manager, this guide i
 
 This content can be used for presentations, used in labs & exercises but also given as handout/reading material.
 
-[View & Download <i class="fas fa-external-link"></i>](https://1drv.ms/b/s!AhEX99ErZbKGg1DtCFnLLTCjuazu){: .btn .btn-success}
+[View & Download <i class="fas fa-external-link"></i>](https://1drv.ms/p/s!AhEX99ErZbKGg0EPvCoAUvLYFyGP){: .btn .btn-success}
