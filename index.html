@@ -39,6 +39,7 @@ image:
   <div class="entry-content">
     {% if post.link %}<br/>{% endif %}
     {{ post.excerpt }}
+    {% if post.excerpt != post.content %}<p style="text-align: center"><a class="btn btn-info" href="{{ site.url }}{{ post.url }}">Read More &nbsp; <i class="far fa-book"></i></a></p>{% endif %}
   </div><!-- /.entry-content -->
 
 </article><!-- /.hentry -->
