@@ -10,6 +10,8 @@ Azure Cosmos DB is a great service with some huge features (global scale, low la
 
 <!--more-->
 
+> **UPDATE.** Since publishing this post, the Cosmos DB team and product manager reached out to me directly about some of the issues I mentioned. Firstly I wanted to say how amazing it is having the product group engage with bloggers and the community like this! Secondly they are looking to address some of problems I encountered, which is great.
+
 For large scale enterprise/global apps the price is justified, but when working on a demo or prototype it can be more painful to use. 
 
 A couple of concepts and terms before we move on. Cosmos DB is sized & priced on 'RU/s', which is "Request Units per second", I'll steal a quote from the docs to explain this one:
@@ -52,10 +54,7 @@ Accompanied with a HTTP 429 error - I was being throttled and rate limited. Well
 
 Sigh.
 
-Simple solution - scale up my throughput on my database to 2000 RU/s (that was a guess) and re-run. The import sailed through no problem, but I couldn't scale back to 400 RU/s! At least not from the portal, the smallest I could go back to was 800 RU/s I'm actually not sure if this is just a bug, but at this point I was **determined** to try to keep my database as small and cheap as possible. 
-I tried again, blew everything away recreated the DB & collections and wrote a little Node.js import script with a small delay built into it
-
-> Update. I think this bug has been resolved
+Simple solution - I scaled up my throughput on my database to 5000 RU/s (that was a guess) and re-run. The import sailed through no problem, after this I scaled it back down to 400 RU/s
 
 # Shards of CRUD 
 Now I had my database running at 400 RU/s with three collections inside it and all my data. Mission accomplished? So I thought...
@@ -65,7 +64,7 @@ Initial testing everything looked good, until I came to do an update or delete, 
 query in command must target a single shard key
 ```
 
-coming from my data access wrapper where I do my CRUD database operations against Mongo. Turns out that certain operations, namely update and delete require not only the id of the document, but also the shard key that I had picked.
+This was coming from my data access wrapper where I do my CRUD database operations against Mongo. Turns out that certain operations, namely update and delete require not only the id of the document, but *also* the shard key that I had picked.
 
 Sigh.
 
@@ -75,16 +74,23 @@ The compromise was to add a extra step inside my API route controllers to first 
 
 
 # Azure Functions 
-One aspect of the application in question is I created a serverless version of the API, using Azure Functions
+One aspect of the Smilr application is a serverless version of the API, using Azure Functions
 
-As my data API was written in Node it wasn't a huge job to port it over and replace my Express API routes with separate functions in a Azure Functions App, along with my data access library
+As my data API was written in Node.js it wasn't a huge job to port it over and replace my Express API routes with separate functions in a Azure Functions App, along with my data access library
 
 One additional function I had was triggering off updates to the Mongo / Cosmos collection and running it through Cognitive Services for sentiment analysis. This was done with the [Cosmos trigger binding](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-cosmos-db-triggered-function). If you follow that link you will see the Mongo API isn't actually supported, but I found for triggers it actually works fine, as long as you use strings for your document ids
 
 The trigger binding wants to create a collection inside your Cosmos DB database called 'leases' so it can keep track of which documents it processes. 
-**BUT** there's no way to tell Functions to create this collection with any sort of shard/partition key. If you try it's silently errors but never gets created. This means there is no way to use the Cosmos trigger binding with a Cosmos DB database using the provisioned throughput feature (i.e. RU/s allocated at the database level)
+
+> **UPDATE.** When originally wrote this post I discussed an issue with the creations of the leases collection in the sharded Cosmos database which was a show stopper. I have subsequently resolved this, so I'll cover what I did wrong!
+
+I found that the leases collection wasn't being created, in order to fix this I changed two things. 
+- Firstly updated the version of the Cosmos DB extension in my Functions app to 3.0.3 this version supports sharding. I edited the **extensions.csproj** file and changed the PackageReference as follows `<PackageReference Include="Microsoft.Azure.WebJobs.Extensions.CosmosDB" Version="3.0.3" />`
+- I spotted I had `"leasesCollectionThroughput": "400"` in my **function.json** file, this isn't a compatible setting as my RU/s are set at the database level, not the collection. 
+ 
+After these two changes, I found everything worked! And any documents/records created in my collections triggered my function as I expected
 
 # Conclusion
-The long of the short of it... I gave up! I went back to a regular Cosmos DB database, provisioned 400 RU/s on my collections and stopped trying pinch the pennies down to the last drop. 
+I have a 400 RU/s database with my three collections nestled inside it, which was the goal I set out to achieve. I have managed to get my Cosmos DB costs down to a bare minimum. I will add, this size/scale of database I wouldn't recommend for anything other than testing or demos, it is *very* low throughput but that's always going to be the trade off
 
-I learned a fair bit about Cosmos DB, MonogDB, sharding along the way, found a few bugs in my code, oh and decided to write a blog post about my adventure.
+In this exercise learned a fair bit about Cosmos DB and MonogDB, plus the use of sharding in collections along the way, found a few bugs in my code, oh and decided to write a blog post about my adventure :)
