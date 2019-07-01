@@ -1,6 +1,6 @@
 ---
 title: Getting On The Go Kart
-tags: [golang, wsl]
+tags: [golang, linux, go]
 image:
   feature: header/h02.svg
 ---
