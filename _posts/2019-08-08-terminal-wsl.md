@@ -45,13 +45,14 @@ Some changes I have made:
 - Configured the background transparency with the `useAcrylic`, `acrylicOpacity` and `background` settings. It takes a bit of fine tuning to get something that looks good
 - Added `"padding" : "5, 5, 5, 5"` to each profile, as I think it looks better
 - Placed a logo in the bottom right of my main profiles (WSL/CLoudShell/PowerShell) to help distinguish between them. This is done with a combo of the `backgroundImage`, `backgroundImageOpacity`, `backgroundImageStretchMode` and `backgroundImageAlignment` settings
+- I wasn't 100% happy with the builtin colour schemes, so I copied the 'Campbell' one to 'Custom' and tweaked some of the colours
 
 If you want to know more check out the [full docs on the settings schema](https://github.com/microsoft/terminal/blob/master/doc/cascadia/SettingsSchema.md)
 
 Some gotchas I have tripped over:
 - The profile icon (the one shown on the tab) will look bad if it's not already sized to 24x24 
 - If manually setting up a profile for WSL be aware of the -d switch to pick the distro you want, e.g. `"commandline" : "wsl.exe -d Ubuntu"` this way you can have multiple profiles one for each distro on your system
-- Another WSL gotcha is the starting directory setting, which you normally want to be your home directory inside the WSL distro, e.g. `"startingDirectory": "//wsl$/Ubuntu/home/ben"`. If not set correctly the session will start in Windows/System32, not what you want!
+- Another WSL gotcha is the starting directory setting, which you normally want to be your home directory inside the WSL distro, e.g. `"startingDirectory": "//wsl$/Ubuntu/home/ben"` (with forward slashes). If not set correctly the session will start in Windows/System32, not what you want!
 
 *Note.* If you get really in a pickle you can delete/rename your `profile.json` (located inside `%LOCALAPPDATA%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\RoamingState\`) and Terminal will create a fresh one at next start
 
@@ -88,7 +89,7 @@ Then edit your `.zshrc` and set `ZSH_THEME="powerlevel9k/powerlevel9k"`
 
 OK so it's still looking manky, you can fix that by installing the font(s) we need. There's a number of ways to do this, the one I use is to download a pack of "Powerline patched" fonts from [github.com/powerline/fonts](https://github.com/powerline/fonts) unzip and just install the TTF file you want to use/try. I've stuck with 'Ubuntu Mono derivative Powerline.ttf' as I like the look of the Ubuntu Mono font (P.S. don't worry about the variants like bold and italic)
 
-Next you'll need to tell Windows Terminal to use the font by changing the `fontFace` setting your profiles.json, e.g. `"fontFace" : "Ubuntu Mono for Powerline"`. If everything has gone to plan, you should finally have a swish looking zsh prompt.
+Next you'll need to tell Windows Terminal to use the font by changing the `fontFace` setting your profiles.json, e.g. `"fontFace" : "Ubuntu Mono derivative Powerline"`. If everything has gone to plan, you should finally have a swish looking zsh prompt.
 
 It's worth mentioning that Powerlevel9k has a [tonne of options](https://github.com/Powerlevel9k/powerlevel9k/wiki/Stylizing-Your-Prompt). This is where you can get really creative. Below is my personal Powerlevel9k configuration (in `.zshrc` of course) and yes I use emoji/unicode as icons, the new Terminal displays them just fine 😍
 ```
@@ -112,11 +113,11 @@ I had tried to go down the "dotfiles stored in git" route which is popular. Pers
 
 ### Back up & Setup Scripts
 As I've come to rely on WSL more & more, I realized losing my config and files would be pretty disastrous. To this end I've setup a couple of things:
-- **Backup.** Since Windows 10 1903 you've been able to access the WSL filesystem from Windows via the `\\wsl$` path. WIth this in place, I created a backup script that runs from Windows (written in PowerShell) and copies my critical dotfiles and other directories over to my OneDrive folder. It's all a little crude but has worked for me so far. The script is scheduled in Windows Task Scheduler 
+- **Backup.** Since Windows 10 1903 you've been able to access the WSL filesystem from Windows via the `\\wsl$` path. With this in place, I created a backup script that runs from Windows (written in PowerShell) and copies my critical dotfiles and other directories over to my OneDrive folder. It's all a little crude but has worked for me so far. The script is scheduled in Windows Task Scheduler 
 - **Setup.** To make re-installation of my system as painless as possible, I wanted a way to easily reinstall all the tools, SDKs, and utilities that I use. For this I create a small setup script for each one, and copy and paste whatever install commands I run. More often or not this might be a simple `sudo apt install foo` but having the script serves as a useful reminder what I've installed. I keep all scripts in setup directory and keep this under git source control linked to GitHub. This has the side benefit I can share these scripts with others
 
 ### Logon banner 
-I've had questions about my logon banner, it's fairly "fabulous" and a probably somewhat OTT but I've 
+I've had questions about my logon banner, it's fairly "fabulous" and a probably somewhat OTT but I've grown rather attached to it :)
 {% include img src="banner.png" %}
 
 The silly colourful text is done with with a command bizarrely called `toilet`. The rest of it is just `echo` commands (with the **-e** switch) at the end of my `.zshrc`, the colours are embedded [ANSI escape sequences](https://misc.flogisoft.com/bash/tip_colors_and_formatting) and the icons are emoji simply copy and pasted directly in the file, e.g.
