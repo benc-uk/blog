@@ -88,15 +88,15 @@ Again this is something you specify in code, in your JavaScript test file. You j
 export let options = { 
   maxRedirects: 4,
   stages: [
-    { duration: '10s', target: 10 },
-    { duration: '20s', target: 20 },
-    { duration: '20s', target: 50 },
-    { duration: '30s', target: 100 },
-    { duration: '10s', target: 0 },
+    { duration: '10s', target: 10 }, // 10 seconds of 10 VUs
+    { duration: '20s', target: 20 }, // 20 seconds of 20 VUs
+    { duration: '45s', target: 50 }, // 45 seconds of 50 VUs
+    { duration: '3m',  target: 80 }, // 3 minutes of 80 VUs
+    { duration: '10s', target: 0 },  // 10 ramping down to zero VUs
   ],
   thresholds: {
-    "failed requests":   [ "rate < 0.1" ], 
-    "http_req_duration": [ "avg < 500" ]
+    "failed requests":   [ "rate < 0.1" ],  // Check total failed requests
+    "http_req_duration": [ "avg < 500" ]    // Check average response times under 500ms
   }
 };
 ```
