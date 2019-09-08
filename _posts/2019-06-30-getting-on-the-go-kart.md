@@ -52,6 +52,7 @@ Add this line to your `.bashrc` or `.zshrc` file
 ```
 export GO111MODULE=on
 ```
+**UPDATE** Go 1.13 has been released. If you're using 1.13 or above, you can ignore this, setting `GO111MODULE` is no longer required.
 
 From here I assume you've got a directory you want to work from, this is your Go ***project***
 
@@ -59,9 +60,9 @@ You need to initialize your project as a module, using `go mod init`. If you hav
 ```
 go mod init mymodule
 ```
-If you don't provide a name you will get a baffling error: `go: cannot determine module path for source directory` which is both unhelpful and misleading.
+If you don't provide a name you will get a baffling error: `go: cannot determine module path for source directory` which is pretty unhelpful.
 
-You might be thinking *"But I'm just writing hello world here, I'm not creating anything like a module"* just ignore the terminology and create a module for your tiny hello world test app anyhow. If your project is in a git repo, which has remote pointing at Github, you can simply run `go mod init` without a name, and it will magically use the origin URL as the module name e.g. `github.com/benc-uk/myproj`. 
+You might be thinking *"But I'm just writing hello world here, I'm not creating anything like a module"* just ignore the terminology and create a module for your tiny hello world test app anyhow, you can simply invent a name.
 
 This `init` command will result in a `go.mod` file being created in the root of your project. This file is a little like project.json in Node, or .csproj in .NET Core, or even requirements.txt in Python
 
